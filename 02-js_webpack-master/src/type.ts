@@ -49,6 +49,63 @@ const tu2:[number, number][] = [[11, 22], [33, 44]]
 let obj:{name:string, age?:number}
 obj ={
     name:'Meow',
-    age: 3 // 這邊是 null 或 undifin 可以接受，這邊要調整
+    age: 3 // 這邊是 null 或 undifin 可以接受，這邊要調整 調整要在 tsconfig.json 設定
     // 調整後就可以了偵錯了
 }
+
+
+// unknown，比較安全的 any
+let name3:unknown = 'Meow'
+
+// 斷言 
+let name4:unknown = 'Cat'
+let name5 = name4 as string // 強制轉型 ( 需要先 unknow )
+// 斷言應用
+async function getData() {
+    // 製作假的資料傳遞 jsonplaceholder 拿資料
+    const res = await fetch('https://jsonplaceholder.typicode.com/todos/1')
+    const data = await res.json() as { userId: number, id: number, title:string, completed:boolean }
+    console.log(data);
+}
+getData()
+
+// any 與 unknown
+// 直播狀態
+const liveStatus = false
+function getLiveName() {
+    let liveName: unknown
+    if (liveStatus) {
+        liveName = 'Meow Live'
+    }else{
+        liveName = null
+    }
+    return liveName
+}
+
+const result = getLiveName()
+// 類型檢查
+if (typeof result === 'string') {
+    result.split('')
+}
+
+
+// union 與 never
+// union 
+const arr7: (string |boolean)[] = []
+arr7.push(false)
+arr7.push('')
+
+let liveName: string | number
+liveName = 'Cat'
+liveName = 99
+// liveName = false // 不能為 string | number 以外
+
+// never 不會發生的類型無法變成 string
+// if (typeof liveName === 'string') {
+//     liveName.split()
+// }
+
+// 強制斷言
+let liveName2 = 999
+// 先變成 unknown 再轉成需要的類型
+let liveName3 = liveName2 as unknown as string
