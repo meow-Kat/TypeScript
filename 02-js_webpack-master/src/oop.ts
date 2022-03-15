@@ -58,23 +58,72 @@ interface UserInterface{
 }
 
 // implements 希望建立 user 功能同時保有上面的會員功能 ( 簡單說就是繼承 )
-class LiveUser implements UserInterface {
-    // 約束類型
-    id: number
-    name: string
-    age: number
-    address: string
+// class LiveUser implements UserInterface {
+//     // 約束類型
+//     id: number
+//     name: string
+//     age: number
+//     address: string
 
-    add1: (data: any) {}
-    update1: (id: number) {
-        // ...
-        return true
+//     add1: (data: any) {}
+//     update1: (id: number) {
+//         // ...
+//         return true
+//     }
+//     delete2: (id: number) {
+//         // ...
+//         return true
+//     }
+//     // 額外功能
+//     postVideo() {}
+//     deleteVideo(){}
+// }
+
+// Class Extends ( class 與 class 之間 )
+
+// 通用類別
+class Animal{
+    name: string
+    constructor (name1: string) {
+        this.name = name1
     }
-    delete2: (id: number) {
-        // ...
-        return true
+    run () {
+        console.log('run...',this.name);
     }
-    // 額外功能
-    postVideo() {}
-    deleteVideo(){}
+}
+
+class Dog extends Animal{
+    run () {
+        console.log('dog run...');
+    }
+}
+class Cat extends Animal{
+    run () {
+        // super 想要覆蓋原本的方法還要調用原本的方法
+        super.run()
+        console.log('dog run...');
+    }
+}
+
+const d1 = new Dog('Wang')
+d1.run()
+
+const c1 = new Cat('Meow')
+c1.run()
+
+
+// Interface 只能約束繼承者的屬性
+
+// 抽象類別 abstract 約束繼承者外，還要提供功能，此外不提供 new
+abstract class Animals{
+    run () {
+        console.log('run...');
+    }
+    abstract hellow(): void
+}
+class snake extends Animal{
+    // 實作功能
+    hellow(){
+
+    }
 }
