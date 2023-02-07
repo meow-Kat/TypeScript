@@ -2,10 +2,11 @@
 let num1 = 999
 
 // 這邊會錯，因為只能取 number 類型
-// num = 'str' 
+// num1 = 'str' 
 
 // 如果一開始沒有值，就加入類型
-let num2:number;
+let num2:number
+num2 = 100
 
 let str1 = 'Meow'
 let str2:string
@@ -39,32 +40,38 @@ const tu1: [number, string, boolean] = [999, 'Meow', true]
 // 2維陣列
 const tu2:[number, number][] = [[11, 22], [33, 44]]
 
+
 // 物件宣告
-// let obj ={
-//     name:'Meow',
-//     age:999
-// }
+let obj1 ={
+    name:'Meow',
+    age:999
+}
+
+let obj2: { name:string, age:number }
+obj2 = {
+    name:'Cat',
+    age: 3 // 這邊是 null 或 undifin 可以接受，這邊要調整 調整要在 tsconfig.json 設定
+}
 
 // 先宣告後使用，age? 問號是這個項目有或沒有都可以被接受
-let obj:{name:string, age?:number}
-obj ={
-    name:'Meow',
-    age: 3 // 這邊是 null 或 undifin 可以接受，這邊要調整 調整要在 tsconfig.json 設定
-    // 調整後就可以了偵錯了
+let obj3: { name:string, age?:number }
+obj3 = {
+    name:'Cat Meow',
 }
 
 
 // unknown，比較安全的 any
 let name3:unknown = 'Meow'
+name3 = 999 // 不會報錯基於比較安全的 any
 
 // 斷言 
 let name4:unknown = 'Cat'
-let name5 = name4 as string // 強制轉型 ( 需要先 unknow )
+let name5 = name4 as string // 原本的資料是 unknow 要轉為其他的型別
 // 斷言應用
 async function getData() {
     // 製作假的資料傳遞 jsonplaceholder 拿資料
     const res = await fetch('https://jsonplaceholder.typicode.com/todos/1')
-    const data = await res.json() as { userId: number, id: number, title:string, completed:boolean }
+    const data = await res.json() as { userId: number, id: number, title:string, completed:boolean } // 斷言的應用
     console.log(data);
 }
 getData()
@@ -90,22 +97,23 @@ if (typeof result === 'string') {
 
 
 // union 與 never
-// union 
-const arr7: (string |boolean)[] = []
+// union，多種類型 94 union 表達方式
+const arr7: (string | boolean)[] = []
 arr7.push(false)
 arr7.push('')
 
-let liveName: string | number
+let liveName: string | number   // union 
 liveName = 'Cat'
 liveName = 99
 // liveName = false // 不能為 string | number 以外
 
-// never 不會發生的類型無法變成 string
-// if (typeof liveName === 'string') {
+// never 永遠不會發生的類型
+// if (typeof liveName === 'string') {  // 無法變成 string，因為在 105 行已宣告只能 string | number 類型
 //     liveName.split()
 // }
 
 // 強制斷言
 let liveName2 = 999
-// 先變成 unknown 再轉成需要的類型
+// 如果要強制轉型，需要先變成 unknown 再轉成需要的類型
 let liveName3 = liveName2 as unknown as string
+export {};

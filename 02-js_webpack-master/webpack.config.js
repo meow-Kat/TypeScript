@@ -43,6 +43,7 @@ module.exports = {
       },
     ],
   },
+  // 讓 webpack 認得以下的檔案打包
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
   },
@@ -56,6 +57,6 @@ module.exports = {
     }),
     new CompressionPlugin()
   ],
-
+  // 把 source-map 變更為 inline-source-map
   devtool: 'inline-source-map'
 }
