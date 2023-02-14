@@ -46,7 +46,7 @@ function getUserData(): never {
 }
 
 // void 類型，也不會回傳東西
-function hellow() {
+function wan() {
     console.log()
 }
 
@@ -81,5 +81,19 @@ const arr = getArr()    // 這樣沒問題
 // 解構宣告會有問題，類型會有誤，每個都是 string 和 number 類型
 // 72 行加入 as const就OK
 const [id, age, userName] = getArr()
+
+
+
+// function 泛型
+//             ↓ 大寫 T type 的意思
+function print<T>(data: T)  {
+    // 同上面的類型
+    let name: T
+    console.log(data);
+}
+// 使用時再決定要傳什麼類型，例如列印的時候要印出什麼類型參數
+print<string>('Meow')
+print<number>(123)
+print<boolean>(true)
 
 // export {};
