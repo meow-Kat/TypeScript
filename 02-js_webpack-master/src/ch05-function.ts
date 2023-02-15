@@ -96,4 +96,30 @@ print<string>('Meow')
 print<number>(123)
 print<boolean>(true)
 
+
+// overload 多個一樣的名稱 function
+function getData(data: string) :void
+function getData(data: number) :void
+/********* 以上可以省略 *********/
+function getData(data: number | string) {
+    console.log()
+}
+getData(99)
+getData('')
+
+/****** 或是以下這樣 ******/
+                    // 回傳的類型 ↓
+function getData1(data: string): string[]
+function getData1(data: number): number
+function getData1(data: Info): Info
+/********* 以上可以省略 *********/
+function getData1(data: unknown): unknown {
+    if(typeof data === 'string') return []
+    if(typeof data === 'number') return 999
+    // 判斷 Info
+    // return 某個 data
+    return false
+}
+getData1('123')
+
 // export {};
