@@ -122,4 +122,21 @@ function getData1(data: unknown): unknown {
 }
 getData1('123')
 
+
+// Rest 參數
+// 多參數傳入
+function claculate(...nums: number[]) {
+    console.log(nums);
+    
+}
+claculate(1,2,3,4,5,99,3213)    // 輸入字串就會有問題
+
+// 多參數傳遞
+function claculate1(a: number, b: number, c: number){
+    console.log(a);
+    console.log(b);
+    console.log(c);
+}
+const nums1 = [1,2,3] as const
+claculate1(...nums1)
 // export {};
