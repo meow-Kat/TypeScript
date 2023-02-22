@@ -139,4 +139,3 @@ function claculate1(a: number, b: number, c: number){
 }
 const nums1 = [1,2,3] as const
 claculate1(...nums1)
-// export {};
