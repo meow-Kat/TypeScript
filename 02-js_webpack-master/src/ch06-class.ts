@@ -102,3 +102,73 @@ class VideoUser implements UserInterface {
     postVideo() {}
     deleteVideo() {}
 }
+
+
+// class 與 class 之間的 extends 而不是和 interface 之間的關係
+// 基本 extends 寫法
+class Animal {
+    name: string
+    run() {
+        console.log('run...');
+    }
+}
+
+class Dog extends Animal {
+    // 覆蓋 run 功能
+    run() {
+        console.log('dog run...');
+    }
+}
+class Cat extends Animal {}
+
+const d1 = new Dog()
+const c1 = new Cat()
+
+// d1 c1 因為繼承 Animal 本身自帶 run
+d1.run()
+d1.run()
+
+
+// 帶有 constructor super extends 寫法
+class Machine {
+    name: string
+    constructor (name1: string) {
+        this.name = name1
+    }
+    run() {
+        console.log('run...', this.name);
+    }
+}
+
+class Bicycle extends Machine {
+    run() {
+        // 需要先跑一次原本的 run() 再跑覆蓋後的 run()
+        super.run()
+        console.log('run...', this.name);
+    }
+}
+
+const b1 = new Bicycle('ddd1')
+
+d1.run()
+
+// 抽象類別 abstract 除了約束繼承者外還要提供功能，interface 只有約束的功能而已
+// abstract 不能被 new，只能被繼承
+abstract class Atom {
+    run() {
+        console.log('run...');
+    }
+    // 約束的 function
+    abstract hello(): void
+}
+
+class Carbon extends Atom {
+    // 必須實作 hello()
+    hello(){
+
+    }
+}
+
+const c2 = new Carbon
+c2.run()
+c2.hello()
