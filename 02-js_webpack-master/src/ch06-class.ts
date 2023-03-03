@@ -172,3 +172,47 @@ class Carbon extends Atom {
 const c2 = new Carbon
 c2.run()
 c2.hello()
+
+
+
+
+// 成員類型 (公開、私有、保護)
+// public private protected
+class UserInfo1 {
+    public name: string = 'Meow'
+}
+const uInfo = new UserInfo1()
+// 如果 name 是 private uInfo.name 會不成立
+uInfo.name
+
+// private protected 都無法從外面被訪問
+class UserInfo2 {
+    // protected 只能被繼承者訪問 private 不能
+    protected name: string = 'Meow'
+    // 若希望不被操作修改但又要可以被外部訪問
+    getName() {
+        return this.name
+    }
+}
+
+class StreamerInformation extends UserInfo2 {
+    hello() {
+        console.log(this.name)
+    }
+}
+const sInfo = new StreamerInformation()
+sInfo.hello()
+console.log(sInfo.getName())
+
+
+// JS 原生私有寫法 2020 ( TS 轉成 JS 並沒有成員類型 )
+class UserInfo3 {
+    // 這裡要注意 tsconfig.json 其中 target 要設定成 es6 才不會有問題
+    #name = 'Meow'
+    getName() {
+        return this.#name   // 這裡也要 # 號
+    }
+}
+
+const u = new UserInfo3
+console.log(u);
