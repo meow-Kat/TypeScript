@@ -216,3 +216,33 @@ class UserInfo3 {
 
 const u = new UserInfo3
 console.log(u);
+
+
+// static 靜態 ( 可被共用 )
+class Bank {
+    // 加入 private 防止被外部修改金額
+    private static balance: number = 1000
+    static withdraw(money: number) {
+        if(this.balance <= 0) return
+        this.balance -= money
+    }
+    // 只有 static 可以呼叫 static 變數
+    static getBalance() {
+        return this.balance
+    }
+}
+// 使用 static 後不用 new 就可以直接操作
+
+// User A 領錢
+function userAWithraw(money:number) {
+    Bank.withdraw(money)
+    console.log(Bank.getBalance());
+}
+// User B 領錢
+function userBWithraw(money:number) {
+    Bank.withdraw(money)
+    console.log(Bank.getBalance());
+}
+
+userAWithraw(200)
+userBWithraw(500)
