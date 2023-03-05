@@ -246,3 +246,30 @@ function userBWithraw(money:number) {
 
 userAWithraw(200)
 userBWithraw(500)
+
+// this
+class CarInfo {
+    // 目前的 this 是這個 class 本身，94 執行這個方法還有對象是誰
+    title: string = '貓貓'
+    constructor() {
+        // this.title = ''
+    }
+    // 這裡綁到 prototype 全域共用
+    hello() {
+        console.log(this.title);
+    }
+    // 這裡每個 new 都會產生，記憶體負擔
+    hello1 = () => {
+        console.log(this.title);
+    }
+}
+
+const carInfo = new CarInfo()
+carInfo.title = 'Meow'
+// 這裡的 title 就變成 Meow
+carInfo.hello()
+
+const hello2 = carInfo.hello
+// this = global(window) 目前的 this 是 global
+hello2()
+
