@@ -10,3 +10,33 @@ function hello<T, U>(text : T, text2: U): T {
 hello<string, number>('Meow', 999)
 hello<number, boolean>(999, true)
 
+
+// 搭配 interface function
+interface Card<T> {
+    title: string
+    desc: T
+}
+// return Card 泛型
+function printCardInfo<TT>(desc: TT): Card<TT> {
+    const data: Card<TT> = {
+        title: 'Mewo',
+        desc
+    }
+    return data
+}
+
+console.log(printCardInfo<number>(9999));   // 參數會帶到 Card 內
+
+// 搭配 interface Class
+interface CarProps<T> {
+    name: T
+}
+
+class Car<TT> implements CarProps<TT> {
+    name: TT
+    constructor(value: TT) {
+        this.name = value
+    }
+}
+const car = new Car<string>('Meow car')
+console.log(car);
