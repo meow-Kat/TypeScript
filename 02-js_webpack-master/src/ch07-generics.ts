@@ -80,3 +80,30 @@ type R3 = N2<never>
 // [] 內容物整個拿去比
 type TT4<T> = [T] extends ['Meow'] ? string : number    // number
 type R2 = TT4<'Mrow' | 'Cat'>
+
+
+
+
+
+// infer
+// 補充 extends
+//                ↓ 保證 T 有 Array 屬性
+function sliceArr<T extends Array<T>>(a: T) {
+    console.log(a.length);
+}
+
+// 使用 infer
+// 當 T 是 Array 的類型才會成立， ↓ 再判斷這裡面的類型是什麼，用 P 裝起來
+type TT5<T> = T extends Array<infer P> ? P : never
+type R5 = TT5<['Meow', 5]>   // 傳入陣列
+
+// function 用法
+// T 是一個參數的 function return P 或 never
+type ParamType<T> = T extends (param1: infer P) => any ? P : never
+
+type R6 = ParamType<(a: number) => void>
+
+interface UserCard { name: string }
+type R7 = ParamType<(a: UserCard) => void>
+
+type R8 = ParamType<[]>     // 丟入陣列，返回 never
