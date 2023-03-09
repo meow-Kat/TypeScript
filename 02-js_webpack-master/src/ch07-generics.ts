@@ -107,3 +107,21 @@ interface UserCard { name: string }
 type R7 = ParamType<(a: UserCard) => void>
 
 type R8 = ParamType<[]>     // 丟入陣列，返回 never
+
+
+// keyof
+interface UserCard{
+    name: string
+    age: number
+    cardTitle: string
+    cardDesc: string
+}
+
+type T1 = keyof UserCard
+// 'name' | 'age' |  'cardDesc' |  'cardTitle'
+const a: T1 = 'name'    // 上面不存在的屬性就會報錯，類似 泛型的結果
+
+// 泛型                 ↓ K 可以繼承 T，T 是 obj 用 keyof 的方式丟給 K，T 就能當成 K 裡面的 key
+function getValue<T, K extends keyof T> (obj: T, key: K) : T[K] {
+    return obj[key]
+}
