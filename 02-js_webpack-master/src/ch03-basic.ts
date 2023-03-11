@@ -116,4 +116,4 @@ liveName = 99
 let liveName2 = 999
 // 如果要強制轉型，需要先變成 unknown 再轉成需要的類型
 let liveName3 = liveName2 as unknown as string
-// export {};
+export {};
