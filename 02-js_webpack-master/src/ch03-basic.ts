@@ -50,7 +50,7 @@ let obj1 ={
 let obj2: { name:string, age:number }
 obj2 = {
     name:'Cat',
-    age: 3 // 這邊是 null 或 undifin 可以接受，這邊要調整 調整要在 tsconfig.json 設定
+    age: 3 // 這邊是 null 或 undifind 可以接受，這邊要調整 調整要在 tsconfig.json 設定
 }
 
 // 先宣告後使用，age? 問號是這個項目有或沒有都可以被接受
@@ -116,4 +116,4 @@ liveName = 99
 let liveName2 = 999
 // 如果要強制轉型，需要先變成 unknown 再轉成需要的類型
 let liveName3 = liveName2 as unknown as string
-export {};
+// export {};
