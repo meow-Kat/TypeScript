@@ -116,4 +116,4 @@ liveName = 99
 let liveName2 = 999
 // 如果要強制轉型，需要先變成 unknown 再轉成需要的類型
 let liveName3 = liveName2 as unknown as string
-export {};
+export {}   // 把裡面的環境隔開來的方式，TS 本身會把檔案 import 進去如果名稱一樣就會認為同一個，只要在不同的檔案其中一個加入 export {} 就可以區隔這個環境
