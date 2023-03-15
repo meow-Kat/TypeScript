@@ -1,5 +1,10 @@
 import "./index.css";
 
+// 路徑引入
+import './ch08-commonJS'
+
+// npm 引入
+import 'webpack'
 
 // import "./ch03-basic.ts";
 // import "./ch04-type_and_interface_and_emus.ts";

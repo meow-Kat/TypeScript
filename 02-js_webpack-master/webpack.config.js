@@ -38,7 +38,7 @@ module.exports = {
       },
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
+        use: 'ts-loader', // 用 ts-loader 編譯的 https://webpack.js.org/guides/typescript/ 有一個警告，不要使用 Common JS 輸出
         exclude: /node_modules/,
       },
     ],
@@ -60,3 +60,5 @@ module.exports = {
   // 把 source-map 變更為 inline-source-map
   devtool: 'inline-source-map'
 }
+// 流程是 先用 TS 編譯成 JS 再用 webpack 打包，但如果 tsconfig moduleResolution 輸出的是 Connon JS 就會失去 tree-shake 功能
+// tree-shake：沒有用到的部分不會包進 js 裡

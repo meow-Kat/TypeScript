@@ -3,14 +3,17 @@
       "outDir": "./dist/",
       "noImplicitAny": true,
       // loader 輸出編譯模式的 JS
-      "module": "es6",
-      "target": "es6",
+      "module": "es6",  // 決定 webpack 最後出去模組的語法 ( Common JS 或 ES Modules )
+      "target": "es6",  // 決定 JS 出去的版本
       "jsx": "react",
       "allowJs": true,
-      "moduleResolution": "node",
+      "moduleResolution": "node", // 用什麼策略選擇引入方式
+      "esModuleInterop": true,  // 允許相容 Common JS，目前都要使用 esModule
+      "allowSyntheticDefaultImports": true,  // 引入的相容性處理 import webpack from 'webpack' 讓這一段可以正常執行，原本需要 import * as 'webpack' from 'webpack'
       "sourceMap":true,
       // 加入
       "strictNullChecks":true,
       // "lib": ["es6"]
     }
 }
+// 有用到的部分請看 webpack.config.js
