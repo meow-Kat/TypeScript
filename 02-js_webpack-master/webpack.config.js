@@ -46,6 +46,9 @@ module.exports = {
   // 讓 webpack 認得以下的檔案打包
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
+    alias: {
+      '@': path.resolve(__dirname, 'src')   // 讓 webpack 知道 @ 在幹嘛的，詳細在 tsconfig
+    }
   },
   // 插件
   plugins: [
