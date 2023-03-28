@@ -1,6 +1,6 @@
 // 佈署到正式環境的部分
 import express, { Express } from "express";
-import compression from "compression";
+import compression from "compression";  // 壓縮套件
 import path from "path";
 
 export default function (app: Express) {
