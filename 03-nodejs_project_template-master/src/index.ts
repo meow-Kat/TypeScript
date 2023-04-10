@@ -19,6 +19,15 @@ const io = new Server(server)   // server 端
 io.on('connection', socket => {
   // join 的頻道 ↓      ↓ 發送訊息
   socket.emit('join', 'welcome')
+
+  // 後端收到前端送出的文字再送到前端去確保有進後端
+  socket.on('chat', msg => {
+    // 在 terminal 會收到文字
+    console.log('server:' + msg);
+    // emit 頻道
+    io.emit('chat', msg)
+  })
+
 })
 
 
