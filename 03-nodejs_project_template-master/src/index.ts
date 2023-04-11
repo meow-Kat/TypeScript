@@ -1,9 +1,11 @@
-import devServer from "./server/dev";
-import prodServer from "./server/prod";
+import devServer from "@/server/dev";
+import prodServer from "@/server/prod";
 import express from "express";    // node.js 後端框架
 
 import { Server } from 'socket.io'  // 引入 socket.io
 import http from 'http';
+// 引入 UserService
+import { UserService } from "@/service/UserService"
 
 import { name } from "@/utils";
 
@@ -14,6 +16,7 @@ const app = express();
 const server = http.createServer(app)
 const io = new Server(server)   // server 端
 
+const userService = new UserService()
 
 // 監測連接
 io.on('connection', socket => {
