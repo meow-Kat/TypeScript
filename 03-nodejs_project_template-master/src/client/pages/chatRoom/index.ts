@@ -15,6 +15,11 @@ if(!userName || !roomName){
 // 建立連接到 node sever
 const clientIo = io()
 
+// 加入聊天室發送
+// clientIo.emit('join', `${userName} 加入聊天室` )    // 原本發送字串
+clientIo.emit('join', { userName,roomName } )    // 改送物件
+
+
 const textInput = document.querySelector('#textInput') as HTMLInputElement
 const submitBtn = document.querySelector('#submitBtn') as HTMLButtonElement
 const chatBoard = document.querySelector('#chatBoard') as HTMLDivElement
@@ -46,6 +51,16 @@ function msgHandler(msg: string) {
     chatBoard.scrollTop = chatBoard.scrollHeight
 }
 
+function roomMsgHandler(msg: string) {
+    const divBox = document.createElement('div')
+    divBox.classList.add('flex', 'justify-center', 'mb-4', 'items-center')
+    divBox.innerHTML = `<p class="text-gray-700 text-sm">${msg}</p>`
+
+    chatBoard.appendChild(divBox)
+    chatBoard.scrollTop = chatBoard.scrollHeight
+
+}
+
 // submitBtn 推斷類型可能是 null
 submitBtn.addEventListener('click', () => {
     const textValue = textInput.value
@@ -59,9 +74,15 @@ backBtn.addEventListener('click', () => {
 
 clientIo.on('join', msg => {
     console.log(msg);
+    roomMsgHandler(msg)
 })
 
 clientIo.on('chat', msg => {
-    console.log('client:' + msg);
+    // console.log('client:' + msg);
     msgHandler(msg)
+})
+
+// 離開聊天室
+clientIo.on('leave', msg => {
+    roomMsgHandler(msg)
 })

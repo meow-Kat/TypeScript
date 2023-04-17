@@ -21,16 +21,34 @@ const userService = new UserService()
 // 監測連接
 io.on('connection', socket => {
   // join 的頻道 ↓      ↓ 發送訊息
-  socket.emit('join', 'welcome')
+  // socket.emit('join', 'welcome')
+
+  socket.on('join', ({ userName, roomName}: { userName:string, roomName: string }) => {
+    const userData = userService.userDataInfoHandler(
+      socket.id,
+      userName,
+      roomName
+    )
+    userService.addUser(userData)
+    // join msg
+    io.emit('join', `${userName} 加入 ${roomName} 聊天室`)
+  })
 
   // 後端收到前端送出的文字再送到前端去確保有進後端
   socket.on('chat', msg => {
     // 在 terminal 會收到文字
-    console.log('server:' + msg);
+    // console.log('server:' + msg);
     // emit 頻道
     io.emit('chat', msg)
   })
 
+  // 斷開連結事件
+  socket.on('disconnect', () => {
+    const userData = userService.getUser(socket.id)
+    const userName = userData?.userName
+    if(userName) io.emit('leave', `${userData.userName}離開聊天室`)
+    userService.removeUser(socket.id)
+  })
 })
 
 
@@ -41,7 +59,7 @@ if (process.env.NODE_ENV === "development") {
   prodServer(app);
 }
 
-console.log("server side", name);
+// console.log("server side", name);
 // 啟動伺服器渲染在這個 port 上
 server.listen(port, () => {
   console.log(`The application is running on port ${port}.`);
