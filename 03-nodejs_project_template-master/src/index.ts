@@ -29,9 +29,17 @@ io.on('connection', socket => {
       userName,
       roomName
     )
+
+    // 區分聊天室房間，socket 的用戶加入某個空間
+    socket.join(userData.roomName)
+
     userService.addUser(userData)
+
+    // 把訊息方送到某個空間，整合下方訊息提示
+    // broadcast 的方法是指廣播給其他人看自己看不到
+    socket.broadcast.to(userData.roomName).emit('join', `${userName} 加入 ${roomName} 聊天室`)
     // join msg
-    io.emit('join', `${userName} 加入 ${roomName} 聊天室`)
+    // io.emit('join', `${userName} 加入 ${roomName} 聊天室`)
   })
 
   // 後端收到前端送出的文字再送到前端去確保有進後端
@@ -46,7 +54,10 @@ io.on('connection', socket => {
   socket.on('disconnect', () => {
     const userData = userService.getUser(socket.id)
     const userName = userData?.userName
-    if(userName) io.emit('leave', `${userData.userName}離開聊天室`)
+    if(userName) {
+      // 改寫 io.emit('leave', `${userData.userName}離開聊天室`)
+      socket.broadcast.to(userData.roomName).emit('leave', `${userData.userName} 離開 ${userData.roomName} 聊天室`)
+    }
     userService.removeUser(socket.id)
   })
 })
