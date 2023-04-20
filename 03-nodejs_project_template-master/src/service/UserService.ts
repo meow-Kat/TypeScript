@@ -1,13 +1,13 @@
 // 在後端啟動
 // 記錄使用者和房間內的內容、ID
 
-type UserData = {
+export type UserData = {
     id: string
     userName: string
     roomName: string
 }
 
-export class UserService {
+export default class UserService {
     // 記錄使用者資訊
     private userMap: Map<string, UserData>
 
@@ -28,7 +28,7 @@ export class UserService {
 
     getUser(id: string) {
 
-        if(this.userMap.has(id)) return null
+        if(!this.userMap.has(id)) return null
 
         const data = this.userMap.get(id)
         if(data) return data

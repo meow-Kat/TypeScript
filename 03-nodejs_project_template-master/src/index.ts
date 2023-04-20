@@ -5,7 +5,10 @@ import express from "express";    // node.js 後端框架
 import { Server } from 'socket.io'  // 引入 socket.io
 import http from 'http';
 // 引入 UserService
-import { UserService } from "@/service/UserService"
+import  UserService from "@/service/UserService"
+// 引入 momentJS
+import moment from "moment"
+
 
 import { name } from "@/utils";
 
@@ -22,6 +25,8 @@ const userService = new UserService()
 io.on('connection', socket => {
   // join 的頻道 ↓      ↓ 發送訊息
   // socket.emit('join', 'welcome')
+
+  socket.emit('userID', socket.id)
 
   socket.on('join', ({ userName, roomName}: { userName:string, roomName: string }) => {
     const userData = userService.userDataInfoHandler(
@@ -44,10 +49,19 @@ io.on('connection', socket => {
 
   // 後端收到前端送出的文字再送到前端去確保有進後端
   socket.on('chat', msg => {
+    // 使用 UTC + 0 的時間對應其他國家使用者的時間 
+    // 在拿到訊息時拿到時間
+    const time = moment.utc()
+
     // 在 terminal 會收到文字
     // console.log('server:' + msg);
     // emit 頻道
-    io.emit('chat', msg)
+    // io.emit('chat', msg)
+    // 改寫上面的，並且收到同個房間的訊息
+    const userData = userService.getUser(socket.id)
+    if(userData) {
+      io.to(userData.roomName).emit('chat', { userData, msg, time })
+    }
   })
 
   // 斷開連結事件
